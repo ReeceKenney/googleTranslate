@@ -1,4 +1,6 @@
 export default {
     primary: '#1a73e8',
-    lightGrey: '#dedede'
+    primaryDisabled: '#6facfc',
+    lightGrey: '#dedede',
+    textColor: '#202124'
 }

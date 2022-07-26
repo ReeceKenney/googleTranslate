@@ -1,10 +1,11 @@
 import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import colors from '../utils/colors';
 import { useState } from 'react';
 
 export default function HomeScreen(props) {
     const [enteredText, setEnteredText] = useState("");
+    const [resultText, setResultText] = useState("");
 
   return (
       <View style={styles.container}>
@@ -41,6 +42,19 @@ export default function HomeScreen(props) {
                     name="arrow-forward-circle-sharp"
                     size={24} 
                     color={enteredText !== "" ? colors.primary : colors.primaryDisabled} />
+            </TouchableOpacity>
+        </View>
+
+        <View style={styles.resultContainer}>
+            <Text style={styles.resultText}>{resultText}</Text>
+
+            <TouchableOpacity
+                disabled={resultText === ""}
+                style={styles.iconContainer}>
+                <MaterialIcons 
+                    name="content-copy"
+                    size={24} 
+                    color={resultText !== "" ? colors.textColor : colors.textColorDisabled} />
             </TouchableOpacity>
         </View>
       </View>
@@ -92,5 +106,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  resultContainer: {
+    borderBottomColor: colors.lightGrey,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    height: 90,
+    paddingVertical: 15
+  },
+  resultText: {
+    fontFamily: 'regular',
+    letterSpacing: 0.3,
+    color: colors.primary,
+    flex: 1,
+    marginHorizontal: 20
   }
 });

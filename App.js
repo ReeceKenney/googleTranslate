@@ -11,6 +11,7 @@ import { Entypo, Ionicons } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useState } from 'react';
 import * as Font from 'expo-font';
+import colors from './utils/colors';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -99,7 +100,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <View onLayout={onLayout} style={{ flex: 1 }}>
-        <Stack.Navigator>
+        <Stack.Navigator
+         screenOptions={{
+          headerTitleStyle: {
+            fontFamily: 'medium',
+            color: 'white'
+          },
+          headerStyle: {
+            backgroundColor: colors.primary
+          }
+         }}>
           <Stack.Group>
             <Stack.Screen
               name="main"

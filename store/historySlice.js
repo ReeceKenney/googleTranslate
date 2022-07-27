@@ -12,8 +12,6 @@ const historySlice = createSlice({
             if (item) {
                 state.items.push(item);
             }
-            
-            console.log(state.items)
         }
     }
 });

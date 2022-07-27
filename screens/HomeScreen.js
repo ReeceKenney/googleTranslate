@@ -1,17 +1,19 @@
-import { ActivityIndicator, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import colors from '../utils/colors';
 import { useCallback, useEffect, useState } from 'react';
 import supportedLanguages from '../utils/supportedLanguages';
 import { translate } from '../utils/translate';
 import * as Clipboard from 'expo-clipboard';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addHistoryItem } from '../store/historySlice';
+import TranslationResult from '../components/TranslationResult';
 
 export default function HomeScreen(props) {
     const params = props.route.params || {};
 
     const dispatch = useDispatch();
+    const history = useSelector(state => state.history.items);
 
     const [enteredText, setEnteredText] = useState("");
     const [resultText, setResultText] = useState("");
@@ -117,7 +119,12 @@ export default function HomeScreen(props) {
         </View>
 
         <View style={styles.historyContainer}>
-
+            <FlatList
+                data={history}
+                renderItem={itemData => {
+                    return <TranslationResult />
+                }}
+            />
         </View>
       </View>
   );

@@ -4,6 +4,7 @@ export default {
     lightGrey: '#dedede',
     textColor: '#202124',
     textColorDisabled: '#898989',
-    greyBackground: '#F2F2F7'
+    greyBackground: '#F2F2F7',
+    subTextColor: '#5f6368'
 
 }

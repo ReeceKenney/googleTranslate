@@ -2,16 +2,17 @@ import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import SavedScreen from './screens/SavedScreen';
+import LanguageSelectScreen from './screens/LanguageSelectScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo, Ionicons } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useState } from 'react';
 import * as Font from 'expo-font';
 import colors from './utils/colors';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -51,7 +52,7 @@ const TabNavigator = () => {
   )
 }
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
 
@@ -117,6 +118,17 @@ export default function App() {
               options={{
                 headerTitle: "Translate"
               }}
+            />
+          </Stack.Group>
+
+          <Stack.Group
+            screenOptions={{
+              presentation: 'containedModal'
+            }}
+          >
+            <Stack.Screen
+              name="languageSelect"
+              component={LanguageSelectScreen}
             />
           </Stack.Group>
         </Stack.Navigator>

@@ -3,5 +3,7 @@ export default {
     primaryDisabled: '#6facfc',
     lightGrey: '#dedede',
     textColor: '#202124',
-    textColorDisabled: '#898989'
+    textColorDisabled: '#898989',
+    greyBackground: '#F2F2F7'
+
 }

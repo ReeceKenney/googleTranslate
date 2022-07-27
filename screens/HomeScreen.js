@@ -1,8 +1,9 @@
-import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import colors from '../utils/colors';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import supportedLanguages from '../utils/supportedLanguages';
+import { translate } from '../utils/translate';
 
 export default function HomeScreen(props) {
     const params = props.route.params || {};
@@ -11,6 +12,7 @@ export default function HomeScreen(props) {
     const [resultText, setResultText] = useState("");
     const [languageTo, setLanguageTo] = useState("fr");
     const [languageFrom, setLanguageFrom] = useState("en");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (params.languageTo) {
@@ -20,7 +22,29 @@ export default function HomeScreen(props) {
         if (params.languageFrom) {
             setLanguageFrom(params.languageFrom);
         }
-    }, [params.languageTo, params.languageFrom])
+    }, [params.languageTo, params.languageFrom]);
+
+    const onSubmit = useCallback(async () => {
+
+        try {
+            setIsLoading(true);
+            const result = await translate(enteredText, languageFrom, languageTo);
+
+            if (!result) {
+                setResultText("");
+                return;
+            }
+
+            const textResult = result.translated_text[result.to];
+            setResultText(textResult);
+        } catch (error) {
+            console.log(error);
+        }
+        finally {
+            setIsLoading(false);
+        }
+
+    }, [enteredText, languageTo, languageFrom])
 
   return (
       <View style={styles.container}>
@@ -51,12 +75,19 @@ export default function HomeScreen(props) {
             />
 
             <TouchableOpacity
+                onPress={isLoading ? undefined : onSubmit}
                 disabled={enteredText === ""}
                 style={styles.iconContainer}>
-                <Ionicons 
-                    name="arrow-forward-circle-sharp"
-                    size={24} 
-                    color={enteredText !== "" ? colors.primary : colors.primaryDisabled} />
+
+                {
+                    isLoading ?
+                    <ActivityIndicator size={'small'} color={colors.primary} /> :
+                    <Ionicons 
+                        name="arrow-forward-circle-sharp"
+                        size={24} 
+                        color={enteredText !== "" ? colors.primary : colors.primaryDisabled} />
+                }
+                
             </TouchableOpacity>
         </View>
 

@@ -5,9 +5,13 @@ import { useCallback, useEffect, useState } from 'react';
 import supportedLanguages from '../utils/supportedLanguages';
 import { translate } from '../utils/translate';
 import * as Clipboard from 'expo-clipboard';
+import { useDispatch } from 'react-redux';
+import { addHistoryItem } from '../store/historySlice';
 
 export default function HomeScreen(props) {
     const params = props.route.params || {};
+
+    const dispatch = useDispatch();
 
     const [enteredText, setEnteredText] = useState("");
     const [resultText, setResultText] = useState("");
@@ -38,6 +42,8 @@ export default function HomeScreen(props) {
 
             const textResult = result.translated_text[result.to];
             setResultText(textResult);
+
+            dispatch(addHistoryItem({ item: result }));
         } catch (error) {
             console.log(error);
         }
@@ -45,7 +51,7 @@ export default function HomeScreen(props) {
             setIsLoading(false);
         }
 
-    }, [enteredText, languageTo, languageFrom]);
+    }, [enteredText, languageTo, languageFrom, dispatch]);
 
     const copyToClipboard = useCallback(async () => {
         await Clipboard.setStringAsync(resultText);

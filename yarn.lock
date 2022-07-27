@@ -1594,7 +1594,7 @@
     "@react-navigation/elements" "^1.3.4"
     "warn-once" "^0.1.0"
 
-"@react-navigation/native@^6.0.0", "@react-navigation/native@^6.0.11":
+"@react-navigation/native@^6.0.0", "@react-navigation/native@^6.0.11", "@react-navigation/native@>=5":
   "integrity" "sha512-z0YTB7Czdb9SNjxfzcFNB3Vym0qmUcxpiYGOOXX8PH0s+xlIs/w+2RVp6YAvAC48A30o7MMCYqy5OeR6lrtWHg=="
   "resolved" "https://registry.npmjs.org/@react-navigation/native/-/native-6.0.11.tgz"
   "version" "6.0.11"
@@ -3405,7 +3405,7 @@
     "default-gateway" "^4.2.0"
     "ipaddr.js" "^1.9.0"
 
-"invariant@*", "invariant@^2.2.4":
+"invariant@*", "invariant@^2.2.4", "invariant@>=2":
   "resolved" "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"
   "version" "2.2.4"
   dependencies:
@@ -4957,7 +4957,7 @@
     "normalize-css-color" "^1.0.2"
     "prop-types" "^15.6.0"
 
-"react-native@*", "react-native@0.68.2":
+"react-native@*", "react-native@>=0.65.0", "react-native@0.68.2":
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.68.2.tgz"
   "version" "0.68.2"
   dependencies:
@@ -4993,6 +4993,13 @@
     "use-subscription" ">=1.0.0 <1.6.0"
     "whatwg-fetch" "^3.0.0"
     "ws" "^6.1.4"
+
+"react-navigation-header-buttons@^9.0.1":
+  "integrity" "sha512-FpzxpSca1UvctSn2SDAnwPIRCt9N3EnYkYDGb/fH5Ak3qnTV67WkyCa/8b8D5Pym3+2KiSXp/XuY3q66LoKNWg=="
+  "resolved" "https://registry.npmjs.org/react-navigation-header-buttons/-/react-navigation-header-buttons-9.0.1.tgz"
+  "version" "9.0.1"
+  dependencies:
+    "invariant" ">=2"
 
 "react-refresh@^0.4.0":
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.4.3.tgz"

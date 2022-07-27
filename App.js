@@ -123,7 +123,14 @@ export default function App() {
 
           <Stack.Group
             screenOptions={{
-              presentation: 'containedModal'
+              presentation: 'containedModal',
+              headerStyle: {
+                backgroundColor: 'white'
+              },
+              headerTitleStyle: {
+                color: colors.textColor,
+                fontFamily: 'medium'
+              }
             }}
           >
             <Stack.Screen

@@ -4,6 +4,7 @@ import colors from '../utils/colors';
 import { useCallback, useEffect, useState } from 'react';
 import supportedLanguages from '../utils/supportedLanguages';
 import { translate } from '../utils/translate';
+import * as Clipboard from 'expo-clipboard';
 
 export default function HomeScreen(props) {
     const params = props.route.params || {};
@@ -44,7 +45,11 @@ export default function HomeScreen(props) {
             setIsLoading(false);
         }
 
-    }, [enteredText, languageTo, languageFrom])
+    }, [enteredText, languageTo, languageFrom]);
+
+    const copyToClipboard = useCallback(async () => {
+        await Clipboard.setStringAsync(resultText);
+    }, [resultText]);
 
   return (
       <View style={styles.container}>
@@ -95,6 +100,7 @@ export default function HomeScreen(props) {
             <Text style={styles.resultText}>{resultText}</Text>
 
             <TouchableOpacity
+                onPress={copyToClipboard}
                 disabled={resultText === ""}
                 style={styles.iconContainer}>
                 <MaterialIcons 

@@ -1,19 +1,34 @@
 import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import colors from '../utils/colors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import supportedLanguages from '../utils/supportedLanguages';
 
 export default function HomeScreen(props) {
+    const params = props.route.params || {};
+
     const [enteredText, setEnteredText] = useState("");
     const [resultText, setResultText] = useState("");
+    const [languageTo, setLanguageTo] = useState("fr");
+    const [languageFrom, setLanguageFrom] = useState("en");
+
+    useEffect(() => {
+        if (params.languageTo) {
+            setLanguageTo(params.languageTo);
+        }
+
+        if (params.languageFrom) {
+            setLanguageFrom(params.languageFrom);
+        }
+    }, [params.languageTo, params.languageFrom])
 
   return (
       <View style={styles.container}>
         <View style={styles.languageContainer}>
             <TouchableOpacity
                 style={styles.languageOption}
-                onPress={() => props.navigation.navigate("languageSelect", { title: "Translate from" })}>
-                <Text style={styles.languageOptionText}>English</Text>
+                onPress={() => props.navigation.navigate("languageSelect", { title: "Translate from", selected: languageFrom, mode: 'from' })}>
+                <Text style={styles.languageOptionText}>{supportedLanguages[languageFrom]}</Text>
             </TouchableOpacity>
 
             <View style={styles.arrowContainer}>
@@ -22,8 +37,8 @@ export default function HomeScreen(props) {
 
             <TouchableOpacity
                 style={styles.languageOption}
-                onPress={() => props.navigation.navigate("languageSelect", { title: "Translate to" })}>
-                <Text style={styles.languageOptionText}>French</Text>
+                onPress={() => props.navigation.navigate("languageSelect", { title: "Translate to", selected: languageTo, mode: 'to' })}>
+                <Text style={styles.languageOptionText}>{supportedLanguages[languageTo]}</Text>
             </TouchableOpacity>
         </View>
 

@@ -4,7 +4,9 @@ import colors from "../utils/colors";
 
 export default LanguageItem = props => {
 
-    return <TouchableOpacity style={styles.container}>
+    return <TouchableOpacity
+                style={styles.container}
+                onPress={props.onPress}>
         <View style={styles.iconContainer}>
             {
                 props.selected &&

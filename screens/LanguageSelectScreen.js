@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { HeaderButton, HeaderButtons, Item } from 'react-navigation-header-buttons';
 import LanguageItem from '../components/LanguageItem';
@@ -17,7 +17,7 @@ const CustomHeaderButton = props => {
 
 export default function LanguageSelectScreen({ navigation, route }) { 
   const params = route.params || {};
-  const { title } = params;
+  const { title, selected } = params;
   useEffect(() => {
     navigation.setOptions({
       headerTitle: title,
@@ -33,6 +33,11 @@ export default function LanguageSelectScreen({ navigation, route }) {
     })
   }, [navigation]);
 
+  const onLanguageSelect = useCallback(itemKey => {
+    const dataKey = params.mode === 'to' ? 'languageTo' : 'languageFrom';
+    navigation.navigate("Home", { [dataKey]: itemKey });
+  }, [params, navigation]);
+
   return (
       <View style={styles.container}>
         
@@ -42,8 +47,9 @@ export default function LanguageSelectScreen({ navigation, route }) {
             const languageKey = itemData.item;
             const languageString = supportedLanguages[languageKey];
             return <LanguageItem
+                      onPress={() => onLanguageSelect(languageKey)}
                       text={languageString}
-                      selected={languageKey === "es"}
+                      selected={languageKey === selected }
                     />
           }}
         />

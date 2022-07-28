@@ -16,6 +16,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import store from './store/store';
 
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// AsyncStorage.clear();
+
 SplashScreen.preventAutoHideAsync();
 
 const Tab = createBottomTabNavigator();

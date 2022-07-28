@@ -4,6 +4,7 @@ import colors from "../utils/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 import { setSavedItems } from "../store/savedItemsSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default TranslationResult = props => {
     const dispatch = useDispatch();
@@ -15,7 +16,7 @@ export default TranslationResult = props => {
     const isSaved = savedItems.some(i => i.id === itemId);
     const starIcon = isSaved ? "star" : "star-outlined";
 
-    const starItem = useCallback(() => {
+    const starItem = useCallback(async () => {
         let newSavedItems;
 
         if (isSaved) {
@@ -25,6 +26,8 @@ export default TranslationResult = props => {
             newSavedItems = savedItems.slice();
             newSavedItems.push(item);
         }
+
+        await AsyncStorage.setItem('savedItems', JSON.stringify(newSavedItems));
 
         dispatch(setSavedItems({ items: newSavedItems }));
     }, [dispatch, savedItems]);
@@ -70,7 +73,8 @@ const styles = StyleSheet.create({
     subTitle: {
         fontFamily: 'regular',
         letterSpacing: 0.3,
-        color: colors.subTextColor
+        color: colors.subTextColor,
+        fontSize: 13
     },
     iconContainer: {
         width: 30,

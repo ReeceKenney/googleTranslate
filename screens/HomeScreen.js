@@ -10,6 +10,7 @@ import { addHistoryItem, setHistoryItems } from '../store/historySlice';
 import TranslationResult from '../components/TranslationResult';
 import uuid from 'react-native-uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setSavedItems } from '../store/savedItemsSlice';
 
 const loadData = () => {
     return async dispatch => {
@@ -18,6 +19,12 @@ const loadData = () => {
             if (historyString !== null) {
                 const history = JSON.parse(historyString);
                 dispatch(setHistoryItems({ items: history }));
+            }
+
+            const savedItemsString = await AsyncStorage.getItem('savedItems');
+            if (savedItemsString !== null) {
+                const savedItems = JSON.parse(savedItemsString);
+                dispatch(setSavedItems({ items: savedItems }));
             }
         } catch (error) {
             console.log(error);

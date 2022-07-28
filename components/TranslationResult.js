@@ -1,12 +1,33 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { Entypo } from '@expo/vector-icons';
 import colors from "../utils/colors";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useCallback } from "react";
+import { setSavedItems } from "../store/savedItemsSlice";
 
 export default TranslationResult = props => {
+    const dispatch = useDispatch();
 
     const { itemId } = props;
     const item = useSelector(state => state.history.items.find(item => item.id === itemId));
+    const savedItems = useSelector(state => state.savedItems.items);
+
+    const isSaved = savedItems.some(i => i.id === itemId);
+    const starIcon = isSaved ? "star" : "star-outlined";
+
+    const starItem = useCallback(() => {
+        let newSavedItems;
+
+        if (isSaved) {
+            newSavedItems = savedItems.filter(i => i.id !== itemId);
+        }
+        else {
+            newSavedItems = savedItems.slice();
+            newSavedItems.push(item);
+        }
+
+        dispatch(setSavedItems({ items: newSavedItems }));
+    }, [dispatch, savedItems]);
 
     return <View style={styles.container}>
 
@@ -20,8 +41,9 @@ export default TranslationResult = props => {
         </View>
 
         <TouchableOpacity
+            onPress={starItem}
             style={styles.iconContainer}>
-            <Entypo name="star" size={24} color={colors.subTextColor} />
+            <Entypo name={starIcon} size={24} color={colors.subTextColor} />
         </TouchableOpacity>
     </View>
 }

@@ -10,7 +10,10 @@ export default TranslationResult = props => {
     const dispatch = useDispatch();
 
     const { itemId } = props;
-    const item = useSelector(state => state.history.items.find(item => item.id === itemId));
+    const item = useSelector(state => {
+        return state.history.items.find(item => item.id === itemId) ||
+            state.savedItems.items.find(item => item.id === itemId)
+    });
     const savedItems = useSelector(state => state.savedItems.items);
 
     const isSaved = savedItems.some(i => i.id === itemId);

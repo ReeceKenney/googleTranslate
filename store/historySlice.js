@@ -12,9 +12,12 @@ const historySlice = createSlice({
             if (item) {
                 state.items.push(item);
             }
+        },
+        setHistoryItems: (state, action) => {
+            state.items = action.payload.items;
         }
     }
 });
 
-export const { addHistoryItem } = historySlice.actions;
+export const { addHistoryItem, setHistoryItems } = historySlice.actions;
 export default historySlice.reducer;

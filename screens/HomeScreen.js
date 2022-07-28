@@ -6,9 +6,24 @@ import supportedLanguages from '../utils/supportedLanguages';
 import { translate } from '../utils/translate';
 import * as Clipboard from 'expo-clipboard';
 import { useDispatch, useSelector } from 'react-redux';
-import { addHistoryItem } from '../store/historySlice';
+import { addHistoryItem, setHistoryItems } from '../store/historySlice';
 import TranslationResult from '../components/TranslationResult';
 import uuid from 'react-native-uuid';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const loadData = () => {
+    return async dispatch => {
+        try {
+            const historyString = await AsyncStorage.getItem('history');
+            if (historyString !== null) {
+                const history = JSON.parse(historyString);
+                dispatch(setHistoryItems({ items: history }));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
 
 export default function HomeScreen(props) {
     const params = props.route.params || {};
@@ -31,6 +46,23 @@ export default function HomeScreen(props) {
             setLanguageFrom(params.languageFrom);
         }
     }, [params.languageTo, params.languageFrom]);
+
+
+    useEffect(() => {
+        dispatch(loadData());
+    }, [dispatch]);
+
+    useEffect(() => {
+        const saveHistory = async () => {
+            try {
+                await AsyncStorage.setItem('history', JSON.stringify(history));
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        saveHistory();
+    }, [history]);
 
     const onSubmit = useCallback(async () => {
 
